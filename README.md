@@ -1,5 +1,7 @@
 # Codex Token Bar
 
+Native macOS menu bar app for OpenAI Codex: tracks token usage, rate limits, reset time, context window, and cached tokens from local Codex logs. Includes a draggable floating usage badge that follows your Codex desktop pet. Private, local-first, no API key.
+
 一个完全本地运行的原生 macOS 菜单栏应用：在菜单栏显示 Codex 主额度剩余比例，并在 Codex 桌面宠物旁显示一个会跟随移动的余额浮标。
 
 这是一个独立的 macOS 应用项目，而不是 Codex Skill。它需要长期运行、创建透明浮层窗口、读取本机 Codex 会话日志，并调用 Codex App Server；这些都超出了 Skill 作为“给模型的工作说明”的合适边界。
