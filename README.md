@@ -14,6 +14,15 @@ Native macOS menu bar app for OpenAI Codex: tracks token usage, rate limits, res
 - 每 3 秒读取最新本地任务信息；每 15 秒刷新账户额度。
 - 多额度池同时存在时，固定优先使用 `limit_id = codex` 的主额度，避免模型专属额度误覆盖主进度。
 
+- 呈现效果：
+- Apple 菜单栏：<img width="1602" height="268" alt="image" src="https://github.com/user-attachments/assets/aeb7d685-f8fd-4c6b-adf0-d00cf13cd811" />
+
+- Apple 菜单栏-展开效果<img width="868" height="892" alt="image" src="https://github.com/user-attachments/assets/d90d833d-4ed7-4814-a8d1-489e7d20d052" />
+
+- Apple  宠物顶部-<img width="342" height="464" alt="image" src="https://github.com/user-attachments/assets/2c2a278c-0fd7-45b2-adce-926f1a7614d7" />
+剩余额度会随着宠物拖动而跟着宠物变化位置
+
+
 ## 系统要求
 
 - macOS 13 或更高版本
