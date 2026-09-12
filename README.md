@@ -14,6 +14,22 @@ Native macOS menu bar app for OpenAI Codex: tracks token usage, rate limits, res
 - 每 3 秒读取最新本地任务信息；每 15 秒刷新账户额度。
 - 多额度池同时存在时，固定优先使用 `limit_id = codex` 的主额度，避免模型专属额度误覆盖主进度。
 
+## Screenshots
+
+### macOS menu bar monitor
+
+<img width="1602" height="268" alt="Codex Token Bar in the macOS menu bar" src="https://github.com/user-attachments/assets/aeb7d685-f8fd-4c6b-adf0-d00cf13cd811" />
+
+### Expanded usage dashboard
+
+<img width="868" height="892" alt="Codex Token Bar expanded token usage dashboard" src="https://github.com/user-attachments/assets/d90d833d-4ed7-4814-a8d1-489e7d20d052" />
+
+### Floating pet quota badge
+
+<img width="342" height="464" alt="Codex desktop pet with floating token quota badge" src="https://github.com/user-attachments/assets/2c2a278c-0fd7-45b2-adce-926f1a7614d7" />
+
+余额浮标会随着宠物拖动而跟随移动。
+
 ## Bundled Codex Pet
 
 仓库同时提供一套已经通过 Codex v2 校验的 LYN（刘宇宁 Q 版）宠物资产。它包含 9 个标准动画状态和 16 个视线方向，方便将 Token Bar 与桌面宠物一起使用。
