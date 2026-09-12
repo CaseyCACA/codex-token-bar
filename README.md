@@ -14,6 +14,16 @@ Native macOS menu bar app for OpenAI Codex: tracks token usage, rate limits, res
 - 每 3 秒读取最新本地任务信息；每 15 秒刷新账户额度。
 - 多额度池同时存在时，固定优先使用 `limit_id = codex` 的主额度，避免模型专属额度误覆盖主进度。
 
+## Bundled Codex Pet
+
+仓库同时提供一套已经通过 Codex v2 校验的 LYN（刘宇宁 Q 版）宠物资产。它包含 9 个标准动画状态和 16 个视线方向，方便将 Token Bar 与桌面宠物一起使用。
+
+![LYN chibi Codex pet animation contact sheet](assets/pets/lyn/contact-sheet.png)
+
+![LYN Codex pet look-direction preview](assets/pets/lyn/look-directions.png)
+
+资产入口：[`assets/pets/lyn/`](assets/pets/lyn/)，其中 `spritesheet.webp` 是可安装的 8×11 v2 精灵图，`pet.json` 是对应清单。
+
 ## 系统要求
 
 - macOS 13 或更高版本
