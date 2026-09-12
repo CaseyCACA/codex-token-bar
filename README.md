@@ -1,4 +1,4 @@
-# Codex Token Pet
+# Codex Token Bar
 
 一个完全本地运行的原生 macOS 菜单栏应用：在菜单栏显示 Codex 主额度剩余比例，并在 Codex 桌面宠物旁显示一个会跟随移动的余额浮标。
 
