@@ -17,7 +17,7 @@ make app ARCH_FLAGS='-arch arm64 -arch x86_64'
 app='dist/Token Bar.app'
 binary="$app/Contents/MacOS/TokenBar"
 plutil -lint "$app/Contents/Info.plist"
-xcrun lipo -verify_arch arm64 x86_64 "$binary"
+xcrun lipo "$binary" -verify_arch arm64 x86_64
 codesign --verify --deep --strict --verbose=2 "$app"
 codesign -dv "$app" 2>&1 | grep -q 'Signature=adhoc'
 # Enforce portable system dependencies, rather than a developer's Homebrew paths.
@@ -33,7 +33,7 @@ verify_dir=$(mktemp -d)
 trap 'rm -rf "$verify_dir"' EXIT
 ditto -x -k "dist/$archive" "$verify_dir"
 codesign --verify --deep --strict --verbose=2 "$verify_dir/Token Bar.app"
-xcrun lipo -verify_arch arm64 x86_64 "$verify_dir/Token Bar.app/Contents/MacOS/TokenBar"
+xcrun lipo "$verify_dir/Token Bar.app/Contents/MacOS/TokenBar" -verify_arch arm64 x86_64
 (cd dist && shasum -a 256 "$archive" > SHA256SUMS && shasum -a 256 -c SHA256SUMS)
 {
   echo "Candidate only: ad-hoc signed; NOT notarized; NOT approved for publication."
