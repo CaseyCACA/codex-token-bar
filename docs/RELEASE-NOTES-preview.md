@@ -23,7 +23,7 @@ SHA256SUMS、BUILD-INFO.txt。解压后拖入应用程序；查看 [安装说明
 - 实测架构、macOS、Codex 版本：待验证
 - 首次浏览器下载与 Gatekeeper 行为：待验证
 - 菜单栏、额度读取、宠物权限与跟随：待验证
-- 许可证：Owner 待选择
+- 许可证：MIT，Copyright (c) 2026 CaseyCACA；须保留版权和许可声明
 - Owner 发布批准：待确认
 
 以上未完成时不得把本草稿作为正式发布声明。

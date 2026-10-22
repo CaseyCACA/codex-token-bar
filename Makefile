@@ -17,6 +17,8 @@ app: build
 	mkdir -p "dist/Token Bar.app/Contents/MacOS"
 	cp .build/bin/TokenBar "dist/Token Bar.app/Contents/MacOS/TokenBar"
 	cp Packaging/Info.plist "dist/Token Bar.app/Contents/Info.plist"
+	mkdir -p "dist/Token Bar.app/Contents/Resources"
+	cp LICENSE THIRD_PARTY_NOTICES.md "dist/Token Bar.app/Contents/Resources/"
 	codesign --force --deep --sign - "dist/Token Bar.app"
 
 run: app

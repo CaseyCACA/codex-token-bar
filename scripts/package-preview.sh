@@ -5,7 +5,7 @@ if [[ "$(uname -s)" != Darwin ]]; then
   echo "A macOS build host with Xcode Command Line Tools is required." >&2
   exit 1
 fi
-for tool in xcrun codesign ditto shasum plutil; do
+for tool in xcrun codesign ditto shasum plutil cmp; do
   command -v "$tool" >/dev/null
 done
 version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Packaging/Info.plist)
@@ -43,6 +43,8 @@ ditto -c -k --sequesterRsrc --keepParent "$app" "dist/$archive"
 verify_dir=$(mktemp -d)
 trap 'rm -rf "$verify_dir"' EXIT
 ditto -x -k "dist/$archive" "$verify_dir"
+cmp LICENSE "$verify_dir/Token Bar.app/Contents/Resources/LICENSE"
+cmp THIRD_PARTY_NOTICES.md "$verify_dir/Token Bar.app/Contents/Resources/THIRD_PARTY_NOTICES.md"
 codesign --verify --deep --strict --verbose=2 "$verify_dir/Token Bar.app"
 xcrun lipo "$verify_dir/Token Bar.app/Contents/MacOS/TokenBar" -verify_arch arm64 x86_64
 (cd dist && shasum -a 256 "$archive" > SHA256SUMS && shasum -a 256 -c SHA256SUMS)

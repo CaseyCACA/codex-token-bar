@@ -87,4 +87,12 @@ Developer ID 签名、公证和票据装订；未公证预览版须明确标记�
 
 维护者请参阅 [发布检查清单](docs/RELEASING.md) 和 [预览版说明草稿](docs/RELEASE-NOTES-preview.md)。
 
-目前仓库未附带许可证；在添加许可证前，代码默认保留所有权利。
+## 许可证
+
+本项目作者拥有的代码和文档采用 [MIT License](LICENSE)：
+允许使用、修改、再分发和商用；分发软件或其实质部分时，须保留版权声明及完整许可声明。
+软件按“原样”提供，不附带担保。
+
+版权署名为 `Copyright (c) 2026 CaseyCACA`。第三方软件、商标以及截图中可能出现的
+第三方界面或素材不因此被重新授权；具体边界见 [第三方说明](THIRD_PARTY_NOTICES.md)。
+本项目是独立工具，不代表 OpenAI、Apple 或 GitHub 官方产品。
