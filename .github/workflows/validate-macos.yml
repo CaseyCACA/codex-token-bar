@@ -22,5 +22,56 @@ jobs:
         run: make package-preview
       - name: Show validation evidence
         run: cat dist/BUILD-INFO.txt dist/SHA256SUMS
-      # Deliberately no artifact upload or Release write permission.
       # A green run does not prove GUI or Gatekeeper download behavior.
+
+  save-candidate:
+    name: Save canonical unnotarized test candidate
+    needs: validate
+    if: >-
+      github.event_name == 'push' &&
+      github.repository == 'CaseyCACA/codex-token-bar' &&
+      github.ref == 'refs/heads/release/prepare-preview'
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Rebuild canonical candidate after both architectures pass
+        run: make package-preview
+      - name: Record candidate provenance and unverified status
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          {
+            echo "Canonical candidate: macos-15 runner; universal arm64/x86_64 app."
+            echo "Runner architecture: $(uname -m)"
+            echo "Actions run: $RUN_ID; attempt: $RUN_ATTEMPT"
+            echo "PUBLIC TEST ARTIFACT: NOT notarized; real-Mac acceptance PENDING; NOT a Release."
+          } >> dist/BUILD-INFO.txt
+          cat dist/BUILD-INFO.txt dist/SHA256SUMS
+      - name: Save public test artifact for seven days
+        id: candidate
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: unnotarized-pending-mac-acceptance-${{ github.sha }}-macos15-arm64-run${{ github.run_id }}-attempt${{ github.run_attempt }}
+          path: |
+            dist/Codex-Token-Bar-*-preview-universal-macos.zip
+            dist/BUILD-INFO.txt
+            dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+          include-hidden-files: false
+      - name: Show artifact identity
+        env:
+          ARTIFACT_ID: ${{ steps.candidate.outputs.artifact-id }}
+          ARTIFACT_URL: ${{ steps.candidate.outputs.artifact-url }}
+          ARTIFACT_DIGEST: ${{ steps.candidate.outputs.artifact-digest }}
+        run: |
+          printf 'Artifact ID: %s\nArtifact URL: %s\nOuter artifact digest: %s\n' "$ARTIFACT_ID" "$ARTIFACT_URL" "$ARTIFACT_DIGEST"
+      # No Release write permission, tags, signing credentials or deployment.

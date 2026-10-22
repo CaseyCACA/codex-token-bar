@@ -49,7 +49,7 @@ codesign --verify --deep --strict --verbose=2 "$verify_dir/Token Bar.app"
 xcrun lipo "$verify_dir/Token Bar.app/Contents/MacOS/TokenBar" -verify_arch arm64 x86_64
 (cd dist && shasum -a 256 "$archive" > SHA256SUMS && shasum -a 256 -c SHA256SUMS)
 {
-  echo "Candidate only: ad-hoc signed; NOT notarized; NOT approved for publication."
+  echo "Candidate only: ad-hoc signed; NOT notarized; NOT approved as a Release; real-Mac acceptance PENDING."
   echo "Version: $version"
   echo "Source commit: $(git rev-parse HEAD)"
   echo "Source status (must be empty for release):"

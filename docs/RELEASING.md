@@ -4,8 +4,12 @@
 
 仅准备 `v0.1.0-preview.1` 非公证预览版，bundle 版本保持现有 0.1.0 / 1。
 只生成 Universal `.app` ZIP、SHA256SUMS、BUILD-INFO；不增加 DMG 或安装器。
-不自动打 tag、不创建 Release、不上传 CI 安装包、不合并 PR。
-CI 只在临时 macOS runner 上验证，成功后仍必须真人试装并由 Owner 授权发布。
+不自动打 tag、不创建 Release、不合并 PR。
+Owner 已批准在公开 GitHub Actions 保存测试候选；这不代表批准正式 Release。
+CI 在临时 macOS runner 上验证。仅本仓库 release/prepare-preview 分支的 push，
+在两个架构校验都通过后，另由 macos-15 重建并验证一个 canonical Universal 候选。
+只保存候选 ZIP、BUILD-INFO 和 SHA256SUMS，保留 7 天；任意 PR 或其他分支不会上传。
+候选明确标记未公证、真实 Mac 验收待完成；正式发布仍须真人试装和 Owner 授权。
 准备预览包的脚本不代表 Owner 已选择非公证分发，也不代表已获发布批准。
 
 现有应用无第三方链接库配置，使用 Cocoa/CoreGraphics/QuartzCore/Foundation。
@@ -53,7 +57,8 @@ Apple Developer Program 通常为 99 USD/年或当地货币价格；已有会员
 
 批准后由维护者手动创建 GitHub **Pre-release**，附 ZIP、SHA256SUMS、BUILD-INFO，
 标题和首段注明“未公证测试版”。不要设为稳定最新版，不要关闭 #1，直到交付真正完成。
-CI 当前刻意不上传候选二进制，避免把自动检查当成安装验收。
+Actions 的公开测试 artifact 仅供验证，不能把其存在或自动检查通过当成安装验收。
+必须记录精确 run、artifact ID、来源提交及内层应用 ZIP SHA-256；不同 runner 的哈希不可混用。
 
 ## 后续正式签名公证
 

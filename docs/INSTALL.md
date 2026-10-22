@@ -1,6 +1,23 @@
 # 安装说明（预览版准备中）
 
-当前没有已验证的 Release。以下步骤供未来正式批准的预览包使用。
+当前没有已验证的 Release。以下常规下载步骤供未来正式批准的预览包使用。
+
+## 当前 GitHub Actions 测试候选
+
+Owner 已允许将候选包保存在公开仓库的 GitHub Actions，保留 7 天。它不是私密文件，
+不是正式 Release，也没有经过苹果公证或真实 Mac 安装验收。
+
+打开维护者提供的精确 Actions run，在 Artifacts 中下载带有
+`unnotarized-pending-mac-acceptance-<提交>-macos15-arm64-...` 的候选。
+这是唯一的 canonical 候选：来源为该提交在 macos-15 runner 上构建的 Universal 应用，
+不是把不同构建任务的安装包混在一起。网页下载通常需要登录 GitHub。
+
+先解压 Actions 的外层 artifact ZIP；里面的 `Codex-Token-Bar-...zip` 才是应用包，
+另有 `BUILD-INFO.txt` 和 `SHA256SUMS`。核对 BUILD-INFO 的提交、run 和测试状态，
+再对内层应用 ZIP 执行下文 SHA-256 校验。外层 artifact 的 digest 与内层应用 ZIP
+的 SHA-256 是两个不同值，不能混用。文件过期、来源不符或校验失败时不要安装。
+
+## 未来获准预览版的下载步骤
 
 1. 仅从本仓库 Releases 下载 `Codex-Token-Bar-<版本>-preview-universal-macos.zip`。
    GitHub 自动生成的 Source code ZIP 是源码，不是应用。
