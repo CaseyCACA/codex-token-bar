@@ -26,36 +26,7 @@ if ! codesign -dv "$app" > .build/codesign-details.txt 2>&1; then
   echo "Unable to inspect the app signature" >&2
   exit 1
 fi
-if ! grep -q '^Signature=adhoc
-# Enforce portable system dependencies, rather than a developer's Homebrew paths.
-xcrun otool -L "$binary" > .build/dependencies.txt
-if grep -E '^[[:space:]]+/' .build/dependencies.txt | grep -Ev '^[[:space:]]+(/System/Library/|/usr/lib/)'; then
-  echo "Unexpected non-system dependency" >&2
-  exit 1
-fi
-archive="Codex-Token-Bar-${version}-preview-universal-macos.zip"
-ditto -c -k --sequesterRsrc --keepParent "$app" "dist/$archive"
-# Verify the transported bundle, not just the original build.
-verify_dir=$(mktemp -d)
-trap 'rm -rf "$verify_dir"' EXIT
-ditto -x -k "dist/$archive" "$verify_dir"
-codesign --verify --deep --strict --verbose=2 "$verify_dir/Token Bar.app"
-xcrun lipo "$verify_dir/Token Bar.app/Contents/MacOS/TokenBar" -verify_arch arm64 x86_64
-(cd dist && shasum -a 256 "$archive" > SHA256SUMS && shasum -a 256 -c SHA256SUMS)
-{
-  echo "Candidate only: ad-hoc signed; NOT notarized; NOT approved for publication."
-  echo "Version: $version"
-  echo "Source commit: $(git rev-parse HEAD)"
-  echo "Source status (must be empty for release):"
-  git status --porcelain
-  sw_vers
-  xcrun clang --version
-  xcrun lipo -archs "$binary"
-  cat .build/dependencies.txt
-  echo "Automated checks passed. GUI, Codex integration and downloaded-app checks still required."
-} > dist/BUILD-INFO.txt
-printf 'Candidate ready for manual testing: dist/%s\n' "$archive"
- .build/codesign-details.txt; then
+if ! grep -q '^Signature=adhoc$' .build/codesign-details.txt; then
   cat .build/codesign-details.txt >&2
   echo "Expected an ad-hoc signed preview app" >&2
   exit 1
