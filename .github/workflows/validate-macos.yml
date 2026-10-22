@@ -1,0 +1,26 @@
+name: Validate macOS release candidate
+on:
+  pull_request:
+  push:
+    branches: [main, 'release/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Test native parser, build and verify universal ZIP
+        run: make package-preview
+      - name: Show validation evidence
+        run: cat dist/BUILD-INFO.txt dist/SHA256SUMS
+      # Deliberately no artifact upload or Release write permission.
+      # A green run does not prove GUI or Gatekeeper download behavior.

@@ -1,15 +1,16 @@
-.PHONY: build test app run clean
+.PHONY: build test app run clean package-preview
 
 CC := xcrun clang
+ARCH_FLAGS ?=
 CFLAGS := -fobjc-arc -fmodules -fmodules-cache-path=.build/module-cache -mmacosx-version-min=13.0 -Wall -Wextra
 
 build:
 	mkdir -p .build/module-cache .build/bin
-	$(CC) $(CFLAGS) -O2 -I Sources/TokenBar Sources/TokenBar/main.m Sources/TokenBar/TokenLogParser.m Sources/TokenBar/AccountRateLimitReader.m -framework Cocoa -framework CoreGraphics -framework QuartzCore -o .build/bin/TokenBar
+	$(CC) $(CFLAGS) $(ARCH_FLAGS) -O2 -I Sources/TokenBar Sources/TokenBar/main.m Sources/TokenBar/TokenLogParser.m Sources/TokenBar/AccountRateLimitReader.m -framework Cocoa -framework CoreGraphics -framework QuartzCore -o .build/bin/TokenBar
 
 test:
 	mkdir -p .build/module-cache .build/bin
-	$(CC) $(CFLAGS) -O0 -g -I Sources/TokenBar Tests/parser_tests.m Sources/TokenBar/TokenLogParser.m Sources/TokenBar/AccountRateLimitReader.m -framework Foundation -o .build/bin/parser-tests
+	$(CC) $(CFLAGS) $(ARCH_FLAGS) -O0 -g -I Sources/TokenBar Tests/parser_tests.m Sources/TokenBar/TokenLogParser.m Sources/TokenBar/AccountRateLimitReader.m -framework Foundation -o .build/bin/parser-tests
 	.build/bin/parser-tests
 
 app: build
@@ -24,3 +25,7 @@ run: app
 clean:
 	rm -rf dist
 	rm -rf .build
+
+# Builds a candidate only; never uploads or publishes it.
+package-preview:
+	bash scripts/package-preview.sh
