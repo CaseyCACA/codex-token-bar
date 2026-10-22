@@ -1,6 +1,6 @@
 # Codex Token Bar
 
-Native macOS menu bar app for OpenAI Codex: tracks token usage, rate limits, reset time, context window, and cached tokens from local Codex logs. Includes a draggable floating usage badge that follows your Codex desktop pet. Private, local-first, no API key.
+macOS menu bar monitor for Codex quota and token usage. Local-first, no API key.
 
 一个完全本地运行的原生 macOS 菜单栏应用：在菜单栏显示 Codex 主额度剩余比例，并在 Codex 桌面宠物旁显示一个会跟随移动的余额浮标。
 
@@ -33,10 +33,19 @@ Native macOS menu bar app for OpenAI Codex: tracks token usage, rate limits, res
 ## 系统要求
 
 - macOS 13 或更高版本
-- Xcode Command Line Tools（提供 `xcrun clang`）
+- 仅从源码构建时需要 Xcode Command Line Tools（提供 `xcrun clang`）
 - 已安装并登录 Codex 桌面应用或 Codex CLI
 
 应用仅读取本机 `~/.codex/sessions` 中的会话日志，并通过本机的 Codex App Server 查询额度；不需要 API Key，也不会发送或上传日志内容。
+
+## 下载与安装
+
+当前尚无已验证的可下载 Release。打包流程正在准备中，请勿把仓库的
+“Source code (zip)”当成安装包，也不要把 CI 通过理解为已完成苹果公证。
+
+未来测试版将提供包含 `Token Bar.app` 的 Universal ZIP（Apple Silicon + Intel），
+解压后拖入“应用程序”即可安装，无需自行编译。未公证测试版首次打开可能被
+Gatekeeper 拦截，详情见 [安装说明](docs/INSTALL.md)。
 
 ## 构建与运行
 
@@ -71,6 +80,19 @@ Makefile              构建、测试、签名和运行命令
 
 ## 发布说明
 
-`make app` 对本机构建产物进行 ad-hoc 签名，仅适合本机使用。若要分发给其他用户，需要使用自己的 Apple Developer ID 签名并完成公证。
+`make app` 生成当前架构的 ad-hoc 签名应用。`make package-preview` 在 macOS 上
+运行测试，生成并校验 Universal ZIP 和 SHA-256；它不会上传或发布安装包。
+这不是 Developer ID 签名，也没有苹果公证。面向普通用户的正式分发建议完成
+Developer ID 签名、公证和票据装订；未公证预览版须明确标记并完成真人试装。
 
-目前仓库未附带许可证；在添加许可证前，代码默认保留所有权利。
+维护者请参阅 [发布检查清单](docs/RELEASING.md) 和 [预览版说明草稿](docs/RELEASE-NOTES-preview.md)。
+
+## 许可证
+
+本项目作者拥有的代码和文档采用 [MIT License](LICENSE)：
+允许使用、修改、再分发和商用；分发软件或其实质部分时，须保留版权声明及完整许可声明。
+软件按“原样”提供，不附带担保。
+
+版权署名为 `Copyright (c) 2026 CaseyCACA`。第三方软件、商标以及截图中可能出现的
+第三方界面或素材不因此被重新授权；具体边界见 [第三方说明](THIRD_PARTY_NOTICES.md)。
+本项目是独立工具，不代表 OpenAI、Apple 或 GitHub 官方产品。
